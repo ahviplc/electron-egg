@@ -107,5 +107,11 @@ export default {
 			pageName: 'OtherJavaIndex',
 			params: {}
 		},
+		'menu_300' : {
+			icon: 'profile',
+			title: '摄像头',
+			pageName: 'OtherCameraIndex',
+			params: {}
+		},
 	}
 }

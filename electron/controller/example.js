@@ -7,7 +7,7 @@ const { exec } = require('child_process');
 const { Controller, Utils } = require('ee-core');
 const electronApp = require('electron').app;
 const {dialog, shell, BrowserView, 
-  Notification, powerMonitor, screen, nativeTheme} = require('electron');
+  Notification, powerMonitor, screen, nativeTheme,desktopCapturer} = require('electron');
 const dayjs = require('dayjs');
 
 let myTimer = null;
@@ -29,6 +29,59 @@ class ExampleController extends Controller {
    * @param args 前端传的参数
    * @param event - ipc通信时才有值。invoke()方法时，event == IpcMainInvokeEvent; send()/sendSync()方法时，event == IpcMainEvent
    */
+
+  // 获取所有可以被捕获的独立窗口
+  async openCamera(args){
+    // 这是传来的参数
+    // console.log(args)
+
+    const data = {
+      msg: '',
+      DesktopCapturerSourceList: []
+    }
+
+    // 获取了所有可以被捕获的独立窗口
+    const  sources = await desktopCapturer.getSources({ types: ['window', 'screen'] })
+
+    for (const source of sources) {
+      const map1 = new Map();
+      map1.set('id', source.id);
+      map1.set('name', source.name);
+      data.DesktopCapturerSourceList.push(map1)
+    }
+
+    data.msg = '获取了所有可以被捕获的独立窗口'
+    // 返回前端 frontend/src/views/other/camera/Index.vue
+    return data
+  }
+
+  // 返回单独的一个被捕获的独立窗口 | name = 'EE框架'
+  // 返回到前端 开始串流 渲染 通过【navigator.mediaDevices.getUserMedia】
+  async openCamera2(args){
+    // 这是传来的参数
+    // console.log(args)
+
+    const data = {
+      msg: '',
+      DesktopCapturerSourceList: [],
+    }
+
+    // 获取了所有可以被捕获的独立窗口
+    const  sources = await desktopCapturer.getSources({ types: ['window', 'screen'] })
+
+    for (const source of sources) {
+      if(source.name === 'EE框架'){
+        const map1 = new Map();
+        map1.set('id', source.id);
+        map1.set('name', source.name);
+        data.DesktopCapturerSourceList.push(map1)
+      }
+    }
+
+    data.msg = '获取了所有可以被捕获的独立窗口'
+    // 返回前端 frontend/src/views/other/camera/Index.vue
+    return data
+  }
 
   /**
    * test

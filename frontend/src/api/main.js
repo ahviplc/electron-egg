@@ -5,6 +5,8 @@ import request from '@/utils/request'
  * 路由定义（主进程与渲染进程通信频道定义）
  */
 const ipcApiRoute = {
+  openCamera: 'controller.example.openCamera',
+  openCamera2: 'controller.example.openCamera2',
   test: 'controller.example.test',
   messageShow: 'controller.example.messageShow',
   messageShowConfirm: 'controller.example.messageShowConfirm',

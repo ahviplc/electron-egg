@@ -100,7 +100,7 @@ export const constantRouterMap = [
             path: '/base/updater/index',
             name: 'BaseUpdaterIndex',
             component: () => import('@/views/base/updater/Index')
-          },  
+          },
         ]  
       },
       {
@@ -119,7 +119,12 @@ export const constantRouterMap = [
             path: '/other/java/index',
             name: 'OtherJavaIndex',
             component: () => import('@/views/other/java/Index')
-          }
+          },
+          {
+            path: '/other/camera/index',
+            name: 'OtherCameraIndex',
+            component: () => import('@/views/other/camera/Index')
+          },
         ] 
       }
     ]
