@@ -12,6 +12,81 @@
 
 ## 🌏 [English](https://www.yuque.com/u34495/ee-doc) | [中文](https://www.yuque.com/u34495/mivcfg)
 
+```markdown
+C:\Users\theDiyPCOfLC\AppData\Roaming\ee\data
+
+
+* 安装
+# 设置国内镜像源(加速)
+npm config set registry=https://registry.npmmirror.com
+npm config set disturl=https://registry.npmmirror.com/-/binary/node
+
+#如果下载electron慢，配置如下（或者挂个VPN）
+npm config set electron_mirror=https://registry.npmmirror.com/-/binary/electron/
+
+# 进入目录 ./electron-egg/
+npm install
+
+# 如果还是提示 electron 没安装，进入 node_modules/electron 目录下，再npm install
+
+# 构建sqlite
+# - 需要 python3 环境 （操作系统自带）
+# - 需要 node-gyp
+npm i node-gyp -g
+npm run re-sqlite
+
+# 如果sqlite报错 ...tools之类的
+npm --vs2015 i -g --production windows-build-tools
+或者
+npm i -g --production windows-build-tools 
+
+* 运行 部署
+# 开发者模式
+	# 1：【进入前端目录】，启动前端服务
+cd electron-egg/frontend && npm install && npm run serve
+# 2：【根目录】，启动后端服务
+npm run dev
+
+# 开发模式（主进程）
+npm run dev
+
+# 开发模式-热加载（主进程）
+npm run reload
+
+# 预发布模式（环境变量为：prod）
+npm run start
+
+# 打包 （windows版）
+npm run build-w (32位)
+npm run build-w-64 (64位)
+npm run build-w-arm64 (arm64)
+
+# 打包 （windows 免安装版）
+# ee > v2.2.1
+npm run build-wz (32位)
+npm run build-wz-64 (64位)
+npm run build-wz-arm64 (arm64)
+
+# 打包 （mac版）
+npm run build-m
+npm run build-m-arm64 (m1芯片架构)
+
+# 打包 （linux版）
+# ee > v2.2.1
+npm run build-l (32位 deb包)
+npm run build-l-64 (64位 deb包)
+npm run build-l-arm64 (64位 deb包 arm64)
+npm run build-l-armv7l (64位 deb包 armv7l)
+npm run build-lr-64 (64位 rpm包)
+npm run build-lp-64 (64位 pacman包)
+
+# 移动前端静态资源
+npm run rd
+
+# 代码加密
+npm run encrypt
+```
+
 ## 📋 介绍
 - 🍩 **为什么使用？** 桌面软件（办公方向、 个人工具），仍然是未来十几年PC端需求之一，提高工作效率
 - 🍉 **简单：** 只需懂 JavaScript
