@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { ipcApiRoute } from '@/api/main'
+import {ipcApiRoute, specialIpcRoute} from '@/api/main'
 
 export default {
   data() {
@@ -59,8 +59,19 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.init()
+  },
   methods: {
-    createWindow (index) {
+    init() {
+      console.log('frontend/src/views/base/window/Index.vue',' 已初始化监听窗口2发来的消息 ')
+      // 监听 窗口2 发来的消息
+      this.$ipc.removeAllListeners(specialIpcRoute.window2ToWindow1);
+      this.$ipc.on(specialIpcRoute.window2ToWindow1, (event, arg) => {
+        this.$message.info(arg);
+      })
+    },
+    createWindow(index) {
       this.$ipcInvoke(ipcApiRoute.createWindow, this.views[index]).then(r => {
         console.log(r);
       })

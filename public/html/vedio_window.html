@@ -65,9 +65,19 @@
         // 发送关闭摄像头通知-让主线程发送系统通知
         // window.dialogAPI.quitVedio("退出直播");
         ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title: '通知', body: '退出直播'})
-        this.stopMedia();
-        window.opener.postMessage("close-vedio-window");
+        // this.stopMedia();
+        // window.opener.postMessage("close-vedio-window");
+        close_win()
     };
+
+    function close_win(){
+        // 获取主窗口id
+        ipcRenderer.invoke('controller.example.getWCid', 'main').then(id => {
+            const this_mainWCid = id;
+            console.log('主窗口的id', this_mainWCid)
+            ipcRenderer.sendTo(this_mainWCid, 'window2-to-window1', '窗口2 通过 sendTo 给主窗口发送消息');
+        });
+    }
 
     // 右键是暂停和开始摄像
     video.oncontextmenu = () => {
