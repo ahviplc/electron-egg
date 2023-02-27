@@ -6,7 +6,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const { Controller, Utils } = require('ee-core');
 const electronApp = require('electron').app;
-const {dialog, shell, BrowserView, 
+const {dialog, shell, BrowserView,
   Notification, powerMonitor, screen, nativeTheme,desktopCapturer} = require('electron');
 const dayjs = require('dayjs');
 
@@ -44,10 +44,13 @@ class ExampleController extends Controller {
     const  sources = await desktopCapturer.getSources({ types: ['window', 'screen'] })
 
     for (const source of sources) {
-      const map1 = new Map();
-      map1.set('id', source.id);
-      map1.set('name', source.name);
-      data.DesktopCapturerSourceList.push(map1)
+      const dataObj = {
+        id:'',
+        name:''
+      };
+      dataObj.id= source.id
+      dataObj.name= source.name
+      data.DesktopCapturerSourceList.push(dataObj)
     }
 
     data.msg = '获取了所有可以被捕获的独立窗口'
@@ -71,10 +74,13 @@ class ExampleController extends Controller {
 
     for (const source of sources) {
       if(source.name === 'EE框架'){
-        const map1 = new Map();
-        map1.set('id', source.id);
-        map1.set('name', source.name);
-        data.DesktopCapturerSourceList.push(map1)
+        const dataObj = {
+          id:'',
+          name:''
+        };
+        dataObj.id= source.id
+        dataObj.name= source.name
+        data.DesktopCapturerSourceList.push(dataObj)
       }
     }
 
@@ -103,7 +109,7 @@ class ExampleController extends Controller {
 
   /**
    * json数据库操作
-   */   
+   */
   async dbOperation(args) {
     const { service } = this;
     const paramsObj = args;
@@ -113,7 +119,7 @@ class ExampleController extends Controller {
       result: null,
       all_list: []
     };
-    
+
     switch (paramsObj.action) {
       case 'add' :
         data.result = await service.storage.addTestData(paramsObj.info);;
@@ -136,7 +142,7 @@ class ExampleController extends Controller {
 
   /**
    * sqlite数据库操作
-   */   
+   */
   async sqlitedbOperation(args) {
     const { service } = this;
     const paramsObj = args;
@@ -146,7 +152,7 @@ class ExampleController extends Controller {
       result: null,
       all_list: []
     };
-    
+
     switch (paramsObj.action) {
       case 'add' :
         data.result = await service.storage.addTestDataSqlite(paramsObj.info);;
@@ -165,7 +171,7 @@ class ExampleController extends Controller {
         break;
       case 'setDataDir' :
         data.result = await service.storage.setCustomDataDir(paramsObj.data_dir);
-        break;            
+        break;
     }
 
     data.all_list = await service.storage.getAllTestDataSqlite();
@@ -183,7 +189,7 @@ class ExampleController extends Controller {
       message: '自定义消息内容',
       detail: '其它的额外信息'
     })
-  
+
     return '打开了消息框';
   }
 
@@ -201,7 +207,7 @@ class ExampleController extends Controller {
       buttons: ['确认', '取消'], // 按钮及索引
     })
     let data = (res === 0) ? '点击确认按钮' : '点击取消按钮';
-  
+
     return data;
   }
 
@@ -218,7 +224,7 @@ class ExampleController extends Controller {
     }
 
     return filePaths[0];
-  } 
+  }
 
   /**
    * 打开目录
@@ -267,7 +273,7 @@ class ExampleController extends Controller {
   removeViewContent () {
     this.app.electron.mainWindow.removeBrowserView(browserViewObj);
     return true
-  }  
+  }
 
   /**
    * 打开新窗口
@@ -303,7 +309,7 @@ class ExampleController extends Controller {
 
     return winContentsId
   }
-  
+
   /**
    * 获取窗口contents id
    */
@@ -330,7 +336,7 @@ class ExampleController extends Controller {
   //   const extensionDir = path.join(chromeExtensionDir, extensionId);
 
   //   console.log("[api] [example] [loadExtension] extension id:", extensionId);
-  //   unzip(crxFile, extensionDir).then(() => {    
+  //   unzip(crxFile, extensionDir).then(() => {
   //     console.log("[api] [example] [loadExtension] unzip success!");
   //     chromeExtension.load(extensionId);
   //   });
@@ -386,7 +392,7 @@ class ExampleController extends Controller {
     notificationObj.show();
 
     return true
-  }  
+  }
 
   /**
    * 电源监控
@@ -426,7 +432,7 @@ class ExampleController extends Controller {
     });
 
     return true
-  }  
+  }
 
   /**
    * 获取屏幕信息
@@ -446,7 +452,7 @@ class ExampleController extends Controller {
           desc: res.y
         },
       ]
-      
+
       return data;
     }
     if (arg == 1) {
@@ -490,7 +496,7 @@ class ExampleController extends Controller {
     ]
 
     return data;
-  }  
+  }
 
   /**
    * 调用其它程序（exe、bash等可执行程序）
@@ -512,7 +518,7 @@ class ExampleController extends Controller {
     exec(cmdStr);
 
     return true;
-  }  
+  }
 
   /**
    * 获取系统主题
@@ -543,9 +549,9 @@ class ExampleController extends Controller {
   /**
    * 检查是否有新版本
    */
-  checkForUpdater () { 
+  checkForUpdater () {
     const autoUpdaterAddon = this.app.addon.autoUpdater;
-    autoUpdaterAddon.checkUpdate();  
+    autoUpdaterAddon.checkUpdate();
 
     return;
   }
@@ -561,7 +567,7 @@ class ExampleController extends Controller {
 
   /**
    * 检测http服务是否开启
-   */ 
+   */
   async checkHttpServer () {
     const httpServerConfig = this.app.config.httpServer;
     const url = httpServerConfig.protocol + httpServerConfig.host + ':' + httpServerConfig.port;
@@ -575,7 +581,7 @@ class ExampleController extends Controller {
 
   /**
    * 一个http请求访问此方法
-   */ 
+   */
   async doHttpRequest () {
     // http方法
     const method = this.app.request.method;
@@ -597,46 +603,46 @@ class ExampleController extends Controller {
     }
     const dir = electronApp.getPath(body.id);
     shell.openPath(dir);
-    
+
     return true;
-  } 
- 
+  }
+
   /**
    * 一个socket io请求访问此方法
-   */ 
+   */
   async doSocketRequest (args) {
     if (!args.id) {
       return false;
     }
     const dir = electronApp.getPath(args.id);
     shell.openPath(dir);
-    
+
     return true;
   }
-  
+
   /**
    * 异步消息类型
    * @param args 前端传的参数
    * @param event - IpcMainInvokeEvent 文档：https://www.electronjs.org/zh/docs/latest/api/structures/ipc-main-invoke-event
-   */ 
+   */
    async ipcInvokeMsg (args, event) {
     let timeNow = dayjs().format('YYYY-MM-DD HH:mm:ss');
     const data = args + ' - ' + timeNow;
-    
+
     return data;
-  }  
+  }
 
   /**
    * 同步消息类型
    * @param args 前端传的参数
    * @param event - IpcMainEvent 文档：https://www.electronjs.org/docs/latest/api/structures/ipc-main-event
-   */ 
+   */
   async ipcSendSyncMsg (args) {
     let timeNow = dayjs().format('YYYY-MM-DD HH:mm:ss');
     const data = args + ' - ' + timeNow;
-    
+
     return data;
-  }  
+  }
 
   /**
    * 双向异步通信
@@ -659,7 +665,7 @@ class ExampleController extends Controller {
       return '开始了'
     } else if (args.type == 'end') {
       clearInterval(myTimer);
-      return '停止了'    
+      return '停止了'
     } else {
       return 'ohther'
     }
@@ -667,12 +673,12 @@ class ExampleController extends Controller {
 
   /**
    * 上传文件
-   */  
+   */
   async uploadFile() {
     let tmpDir = Utils.getLogDir();
     const files = this.app.request.files;
     let file = files.file;
-    
+
     let tmpFilePath = path.join(tmpDir, file.originalFilename);
     try {
       let tmpFile = fs.readFileSync(file.filepath);
@@ -688,7 +694,7 @@ class ExampleController extends Controller {
 
   /**
    * 启动java项目
-   */ 
+   */
   async startJavaServer () {
     let data = {
       code: 0,
@@ -712,7 +718,7 @@ class ExampleController extends Controller {
 
   /**
    * 关闭java项目
-   */ 
+   */
   async closeJavaServer () {
     let data = {
       code: 0,
@@ -733,10 +739,10 @@ class ExampleController extends Controller {
 
   /**
    * 测试接口
-   */ 
+   */
   hello (args) {
     console.log('hello ', args);
-  }   
+  }
 }
 
 ExampleController.toString = () => '[class ExampleController]';
