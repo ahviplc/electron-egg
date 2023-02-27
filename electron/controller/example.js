@@ -30,6 +30,13 @@ class ExampleController extends Controller {
    * @param event - ipc通信时才有值。invoke()方法时，event == IpcMainInvokeEvent; send()/sendSync()方法时，event == IpcMainEvent
    */
 
+  // =================================================================================================================================
+  // LC Diy Code
+  // 快速通知 只是输出内容
+  showNotificationOnlyTitleANDBody(arg, event){
+    new Notification({ title: arg.title, body: arg.body }).show()
+  }
+
   // 获取所有可以被捕获的独立窗口
   async openCamera(args){
     // 这是传来的参数
@@ -88,6 +95,7 @@ class ExampleController extends Controller {
     // 返回前端 frontend/src/views/other/camera/Index.vue
     return data
   }
+  // =================================================================================================================================
 
   /**
    * test

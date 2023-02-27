@@ -13,6 +13,7 @@
 ## 🌏 [English](https://www.yuque.com/u34495/ee-doc) | [中文](https://www.yuque.com/u34495/mivcfg)
 
 ```markdown
+* 数据所在目录
 C:\Users\theDiyPCOfLC\AppData\Roaming\ee\data
 
 
@@ -85,6 +86,10 @@ npm run rd
 
 # 代码加密
 npm run encrypt
+
+* 一些链接
+ICamera: 纯净且实用的电脑摄像头小工具
+https://gitee.com/xt-gitee/icamera
 ```
 
 ## 📋 介绍
