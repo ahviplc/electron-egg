@@ -59,6 +59,7 @@
         // 可用
         // ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title:'test',body:'test内容'})
     };
+
     // 双击停止视频并且关闭摄像头
     video.ondblclick = () => {
         // 发送关闭摄像头通知-让主线程发送系统通知
@@ -67,6 +68,7 @@
         this.stopMedia();
         window.opener.postMessage("close-vedio-window");
     };
+
     // 右键是暂停和开始摄像
     video.oncontextmenu = () => {
         if (stop) {

@@ -32,13 +32,14 @@ class ExampleController extends Controller {
 
   // =================================================================================================================================
   // LC Diy Code
-  // 快速通知 只是输出内容
-  showNotificationOnlyTitleANDBody(arg, event){
-    new Notification({ title: arg.title, body: arg.body }).show()
+
+  // 快速通知 只是输出标题和内容
+  showNotificationOnlyTitleANDBody(arg, event) {
+    new Notification({title: arg.title, body: arg.body}).show()
   }
 
   // 获取所有可以被捕获的独立窗口
-  async openCamera(args){
+  async openCamera(args) {
     // 这是传来的参数
     // console.log(args)
 
@@ -48,15 +49,15 @@ class ExampleController extends Controller {
     }
 
     // 获取了所有可以被捕获的独立窗口
-    const  sources = await desktopCapturer.getSources({ types: ['window', 'screen'] })
+    const sources = await desktopCapturer.getSources({types: ['window', 'screen']})
 
     for (const source of sources) {
       const dataObj = {
-        id:'',
-        name:''
+        id: '',
+        name: ''
       };
-      dataObj.id= source.id
-      dataObj.name= source.name
+      dataObj.id = source.id
+      dataObj.name = source.name
       data.DesktopCapturerSourceList.push(dataObj)
     }
 
@@ -67,7 +68,7 @@ class ExampleController extends Controller {
 
   // 返回单独的一个被捕获的独立窗口 | name = 'EE框架'
   // 返回到前端 开始串流 渲染 通过【navigator.mediaDevices.getUserMedia】
-  async openCamera2(args){
+  async openCamera2(args) {
     // 这是传来的参数
     // console.log(args)
 
@@ -77,16 +78,16 @@ class ExampleController extends Controller {
     }
 
     // 获取了所有可以被捕获的独立窗口
-    const  sources = await desktopCapturer.getSources({ types: ['window', 'screen'] })
+    const sources = await desktopCapturer.getSources({types: ['window', 'screen']})
 
     for (const source of sources) {
-      if(source.name === 'EE框架'){
+      if (source.name === 'EE框架') {
         const dataObj = {
-          id:'',
-          name:''
+          id: '',
+          name: ''
         };
-        dataObj.id= source.id
-        dataObj.name= source.name
+        dataObj.id = source.id
+        dataObj.name = source.name
         data.DesktopCapturerSourceList.push(dataObj)
       }
     }
