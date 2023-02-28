@@ -36,6 +36,7 @@ class ExampleController extends Controller {
   // LC Diy Code
 
   // 快速通知 只是输出标题和内容
+  // 参数示例 {title: '通知', body: '退出直播'}
   showNotificationOnlyTitleANDBody(arg, event) {
     new Notification({title: arg.title, body: arg.body}).show()
   }

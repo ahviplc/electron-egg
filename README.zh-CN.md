@@ -92,9 +92,10 @@ ICamera: 纯净且实用的电脑摄像头小工具
 https://gitee.com/xt-gitee/icamera
 
 * 说明
-- 在main.js中【this === eeApp】 在electron/controller/example.js中【this.app === eeApp】
+- 在main.js中【this === eeApp】 在electron/controller/example.js和其他大部分js文件中【this.app === eeApp】
   使用说明看文档：app全局对象 - electron全局对象 - electron-egg 官方文档【https://www.yuque.com/u34495/mivcfg/dy8ww1】
 - 系统托盘代码【electron/addon/tray/index.js】
+- 这样可以直接调用控制器中的方法【this.app.controller.example.showNotificationOnlyTitleANDBody({title: '通知', body: '退出直播'})】
 ```
 
 ## 📋 介绍
