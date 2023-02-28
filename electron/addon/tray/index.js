@@ -19,16 +19,22 @@ class TrayAddon {
   create () {
     // 开发环境，代码热更新开启时，会导致托盘中有残影
     if (process.env.EE_SERVER_ENV == 'local' && process.env.HOT_RELOAD == 'true') return;
-    
+
     this.app.console.info('[addon:tray] load');
     const mainWindow = this.app.electron.mainWindow;
 
     // 托盘图标
     let iconPath = path.join(this.app.config.homeDir, this.cfg.icon);
-  
+
     // 托盘菜单功能列表
     const self = this;
     let trayMenuTemplate = [
+      {
+        label: '...待开发...',
+        click: function () {
+         console.log('...待开发...')
+        }
+      },
       {
         label: '显示',
         click: function () {
@@ -42,7 +48,7 @@ class TrayAddon {
         }
       }
     ]
-  
+
     // 点击关闭，最小化到托盘
     mainWindow.on('close', (event) => {
       const extraObj = this.app.electron.extra;
@@ -52,7 +58,7 @@ class TrayAddon {
       mainWindow.hide();
       event.preventDefault();
     });
-    
+
     // 实例化托盘
     this.tray = new Tray(iconPath);
     this.tray.setToolTip(this.cfg.title);
