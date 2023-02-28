@@ -33,7 +33,7 @@ class TrayAddon {
         label: '...待开发...',
         click: function () {
           console.log('...待开发...')
-          this.app.controller.example.showNotificationOnlyTitleANDBody({title: '通知', body: '...待开发...'})
+          self.app.controller.example.showNotificationOnlyTitleANDBody({title: '通知', body: '...待开发...'})
         }
       },
       {
