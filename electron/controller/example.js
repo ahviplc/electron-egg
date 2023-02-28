@@ -6,8 +6,10 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const { Controller, Utils } = require('ee-core');
 const electronApp = require('electron').app;
-const {dialog, shell, BrowserView,
-  Notification, powerMonitor, screen, nativeTheme,desktopCapturer} = require('electron');
+const {
+  dialog, shell, BrowserView, BrowserWindow,
+  Notification, powerMonitor, screen, nativeTheme, desktopCapturer
+} = require('electron');
 const dayjs = require('dayjs');
 
 let myTimer = null;
@@ -330,6 +332,35 @@ class ExampleController extends Controller {
     const id = addonWindow.getWCid(name);
 
     return id;
+  }
+
+  /**
+   * 移除窗口 通过窗口名称
+   */
+  removeWCid (args) {
+    const addonWindow = this.app.addon.window;
+
+    // 主窗口的name默认是main，其它窗口name开发者自己定义
+    const name = args;
+    // 先获取id
+    const id = addonWindow.getWCid(name);
+    // 先在map中移除
+    addonWindow.removeWCid(name);
+
+    // console.log(id,name)
+
+    // 实际移除
+    // 通过窗口的id 返回 BrowserWindow | null - 带有给定 id 的窗口。
+    const thisBrowserWindow  = BrowserWindow.fromId(id);
+    if(thisBrowserWindow){
+
+      // 执行官方api 关闭窗口
+      // 尝试关闭窗口。 该方法与用户手动单击窗口的关闭按钮效果相同。 但网页可能会取消这个关闭操作。 查看 关闭事件。
+      // https://www.electronjs.org/zh/docs/latest/api/browser-window#winclose
+      thisBrowserWindow.close()
+    }
+
+    return true;
   }
 
   /**
