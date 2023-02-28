@@ -338,6 +338,12 @@ class ExampleController extends Controller {
    * 移除窗口 通过窗口名称
    */
   removeWCid (args) {
+    // 使用日志记录功能 logger
+    // this.app === eeApp;
+    this.app.logger.info('===== electron/controller/example.js|ExampleController.removeWCid')
+
+    // 插件模块，扩展 app对象功能
+    // 获取 window 插件
     const addonWindow = this.app.addon.window;
 
     // 主窗口的name默认是main，其它窗口name开发者自己定义

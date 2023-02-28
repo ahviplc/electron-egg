@@ -90,6 +90,11 @@ npm run encrypt
 * 一些链接
 ICamera: 纯净且实用的电脑摄像头小工具
 https://gitee.com/xt-gitee/icamera
+
+* 说明
+- 在main.js中【this === eeApp】 在electron/controller/example.js中【this.app === eeApp】
+  使用说明看文档：app全局对象 - electron全局对象 - electron-egg 官方文档【https://www.yuque.com/u34495/mivcfg/dy8ww1】
+- 系统托盘代码【electron/addon/tray/index.js】
 ```
 
 ## 📋 介绍
