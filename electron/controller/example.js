@@ -35,6 +35,104 @@ class ExampleController extends Controller {
   // =================================================================================================================================
   // LC Diy Code
 
+  /**
+   * 更改 BrowserWindow 的相关样式
+   * https://www.electronjs.org/zh/docs/latest/api/browser-window
+   * https://www.bootwiki.com/electron/electron-browser-window.html
+   *
+   * 窗口样式借鉴 https://gitee.com/xt-gitee/icamera/blob/master/main.js
+   *
+   * 一些窗口配置项
+   * roundedCorners boolean (可选) macOS - 无边框窗口在 macOS 上，是否应该有圆角。 默认值为 true。 属性设置为 false ，将阻止窗口是可全屏的。
+   * frame boolean (可选) - 设置为 false 时可以创建一个无边框窗口 默认值为 true。 | 可以去掉 顶部导航 去掉关闭|最大化|最小化|按钮
+   * movable boolean 设置用户是否可以移动窗口。 在Linux上不起作用。
+   * resizable boolean (可选) - 窗口大小是否可调整。 默认值为 true。
+   * transparent boolean (可选) - 使窗口 透明。 默认值为 false. 在Windows上，仅在无边框窗口下起作用。| 使无框窗口透明
+   * alwaysOnTop boolean (可选) - 窗口是否永远在别的窗口的上面。 默认值为 false.
+   * show boolean (可选) - 窗口是否在创建时显示。 默认值为 true。
+   *
+   * @param args
+   */
+  modifyBrowserWindowStyle(args, event) {
+    let this_BrowserWindow = this._getBrowserWindow(args.name);
+    // console.log(this_BrowserWindow);
+
+    // 最大化窗口。 如果窗口尚未显示，该方法也会将其显示 (但不会聚焦)。
+    // this_BrowserWindow.maximize()
+
+    // 设置窗口的背景颜色
+    this_BrowserWindow.setBackgroundColor('rgba(33,125,226,0.72)')
+    // console.log(this_BrowserWindow.getBackgroundColor());
+
+    // 调整窗口的width和 height
+    this_BrowserWindow.setSize(250,250)
+
+    // 启动或停止闪烁窗口, 以吸引用户的注意
+    this_BrowserWindow.flashFrame(true)
+
+    // 设置用户是否可以手动调整窗口大小
+    this_BrowserWindow.setResizable(true)
+
+    // 设置用户是否可以移动窗口。 在Linux上不起作用
+    this_BrowserWindow.setMovable(true)
+
+    // 居中
+    this_BrowserWindow.center()
+
+    // 设置窗口是否应始终显示在其他窗口的前面
+    this_BrowserWindow.setAlwaysOnTop(true)
+
+    // 取消工具栏
+    // 设置窗口菜单栏是否自动隐藏。 一旦设置，菜单栏将只在用户单击 Alt 键时显示。
+    this_BrowserWindow.setAutoHideMenuBar(true)
+    // 设置菜单栏是否可见。 如果菜单栏自动隐藏，用户仍然可以通过单击 Alt 键来唤出菜单栏。
+    this_BrowserWindow.setMenuBarVisibility(false)
+    // 隐藏顶部菜单
+    // this_BrowserWindow.setMenu(null);
+
+    // 设置 transparent 和 frame 此页面的方法【createWindow (args)】也进行了相关的代码处理
+    // 无边框窗口 【https://www.electronjs.org/zh/docs/latest/api/frameless-window】
+    // 【frontend/src/views/base/window/Index.vue:61】
+    // 此窗口忽略所有鼠标事件 设置为 false 点击将无法穿透窗口
+    this_BrowserWindow.setIgnoreMouseEvents(false)
+
+    // 事件监听 生效的
+    this_BrowserWindow.on('minimize', () => {
+      console.log('===== electron/controller/example.js', ' modifyBrowserWindowStyle()', ' 窗口最小化时触发 =====')
+    })
+
+    // 最后将其show出来 不写也会生效前面的配置
+    // this_BrowserWindow.show()
+
+    return true;
+  }
+
+  /**
+   * 获取对应 BrowserWindow 通过窗口名称name
+   * @param this_name 窗口名称
+   */
+  _getBrowserWindow(this_name) {
+    // 使用日志记录功能 logger
+    // this.app === eeApp;
+    this.app.logger.info('===== electron/controller/example.js|ExampleController.getBrowserWindow')
+
+    // 插件模块，扩展 app对象功能
+    // 获取 window 插件
+    const addonWindow = this.app.addon.window;
+
+    // 主窗口的name默认是main，其它窗口name开发者自己定义
+    const name = this_name;
+    // 先获取id
+    const id = addonWindow.getWCid(name);
+
+    // console.log(id,name)
+
+    // 实际移除
+    // 通过窗口的id 返回 BrowserWindow | null - 带有给定 id 的窗口。
+    const thisBrowserWindow = BrowserWindow.fromId(id);
+    return thisBrowserWindow;
+  }
+
   // 快速通知 只是输出标题和内容
   // 参数示例 {title: '通知', body: '退出直播'}
   showNotificationOnlyTitleANDBody(arg, event) {
@@ -42,7 +140,7 @@ class ExampleController extends Controller {
   }
 
   // 获取所有可以被捕获的独立窗口
-  async openCamera(args) {
+  async openCamera(args, event) {
     // 这是传来的参数
     // console.log(args)
 
@@ -71,7 +169,7 @@ class ExampleController extends Controller {
 
   // 返回单独的一个被捕获的独立窗口 | name = 'EE框架'
   // 返回到前端 开始串流 渲染 通过【navigator.mediaDevices.getUserMedia】
-  async openCamera2(args) {
+  async openCamera2(args, event) {
     // 这是传来的参数
     // console.log(args)
 
@@ -84,7 +182,7 @@ class ExampleController extends Controller {
     const sources = await desktopCapturer.getSources({types: ['window', 'screen']})
 
     for (const source of sources) {
-      if (source.name === 'EE框架') {
+      if (source.name === 'Entire Screen') {
         const dataObj = {
           id: '',
           name: ''
@@ -309,8 +407,26 @@ class ExampleController extends Controller {
     }
 
     const addonWindow = this.app.addon.window;
+
+    // BrowserWindow 的原生属性 frame 处理
+    // frame boolean (可选) - 设置为 false 时可以创建一个无边框窗口 默认值为 true。 | 可以去掉 顶部导航 去掉关闭|最大化|最小化|按钮
+    // 给赋值默认值 true
+    if (args.frame == undefined) {
+      args.frame = true
+    }
+
+    // 通过将 transparent 选项设置为 true, 还可以使无框窗口透明
+    // 给赋值默认值 false
+    if (args.transparent == undefined) {
+      args.transparent = false
+    }
+
     let opt = {
-      title: args.windowName || 'new window'
+      title: args.windowName || 'new window',
+      width: args.width || 980, // 自己扩展的参数配置项
+      height: args.height || 650,
+      frame: args.frame,
+      transparent: args.transparent,
     }
     const name = args.windowName || 'window-1';
     const win = addonWindow.create(name, opt);

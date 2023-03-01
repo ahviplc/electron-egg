@@ -58,6 +58,27 @@
         // 只传标题和内容
         // 可用
         // ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title:'test',body:'test内容'})
+
+        // 异步操作
+        // 延时加载一下 主要是将里面的方法代码异步执行
+        // node_modules/ee-core/addon/window/index.js:34 | 要不窗口内容的监听器 did-finish-load 代码还没有执行 往map注册窗口name和id 在line35行代码
+        // 执行之后 才会存入【windowContentsIdMap 保存窗口webContents.id 的对象】【electron-egg文档 addon https://www.yuque.com/u34495/mivcfg/yli9m1zb0xhusb1x】
+        // 才不会导致运行【electron/controller/example.js._getBrowserWindow()】时 此页面的id获取为null 导致报错
+        // 创建延时器
+        let timer = setTimeout(function () {
+            console.log("再次初始化样式", "modifyBrowserWindowStyle");
+            // 改变此弹出窗口的样式 高 宽 是否透明等
+            ipcRenderer.invoke('controller.example.modifyBrowserWindowStyle', {
+                name: 'window-1', // 这个是【electron/controller/example.js.createWindow (args)】写死的name
+                height: 700,
+                width: 700
+            }).then(res => {
+                console.log('res:', res)
+            })
+        }, 50);
+        // 清除延时器
+        // clearTimeout(timer);
+
     };
 
     // 双击停止视频并且关闭摄像头

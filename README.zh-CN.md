@@ -96,6 +96,8 @@ https://gitee.com/xt-gitee/icamera
   使用说明看文档：app全局对象 - electron全局对象 - electron-egg 官方文档【https://www.yuque.com/u34495/mivcfg/dy8ww1】
 - 系统托盘代码【electron/addon/tray/index.js】
 - 这样可以直接调用控制器中的方法【this.app.controller.example.showNotificationOnlyTitleANDBody({title: '通知', body: '退出直播'})】
+-【node_modules/ee-core/addon/window/index.js】
+- 保存文件操作代码块【https://gitee.com/xt-gitee/icamera/blob/master/main.js】
 ```
 
 ## 📋 介绍

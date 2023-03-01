@@ -7,3 +7,5 @@ package-lock.json
 data/
 .vscode/launch.json
 public/electron/
+# 开发的时候 去掉#
+public/dist

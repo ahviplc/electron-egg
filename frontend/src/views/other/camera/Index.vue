@@ -2,9 +2,10 @@
   <div id="app-other">
     <div class="one-block-1">
       <span>
-        调用摄像头 待开发...
+        <p style="text-align: center">直播 桌面窗口捕获 推流...</p>
+         <a-divider>------------------------------------------------------------------</a-divider>
         <a-button @click="openCamera()">获取所有可以被捕获的独立窗口</a-button>
-        <a-button @click="openCamera2()">打开摄像头</a-button>
+        <a-button @click="openCamera2()">桌面单窗口捕获</a-button>
       </span>
       <!--{{item_list}}-->
       <a-divider>------------------------------------------------------------------</a-divider>

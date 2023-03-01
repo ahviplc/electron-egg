@@ -26,7 +26,7 @@ export default {
 			title: 'socket服务',
 			pageName: 'BaseSocketSocketServer',
 			params: {}
-		},    
+		},
 		'menu_310' : {
 			icon: 'profile',
 			title: 'json数据库',
@@ -74,25 +74,25 @@ export default {
 			title: '系统主题',
 			pageName: 'BaseThemeIndex',
 			params: {}
-		},   
+		},
 		'menu_412' : {
 			icon: 'profile',
 			title: '自动更新',
 			pageName: 'BaseUpdaterIndex',
 			params: {}
-		},    
+		},
 		'menu_500' : {
 			icon: 'profile',
 			title: '软件调用',
 			pageName: 'BaseSoftwareIndex',
 			params: {}
-		},		
+		},
 		'menu_900' : {
 			icon: 'profile',
 			title: '测试',
 			pageName: 'BaseTestApiIndex',
 			params: {}
-		}                                                 
+		}
 	},
 	other: {
 		'menu_100' : {
@@ -109,7 +109,7 @@ export default {
 		},
 		'menu_300' : {
 			icon: 'profile',
-			title: '摄像头',
+			title: '直播窗口捕获',
 			pageName: 'OtherCameraIndex',
 			params: {}
 		},
