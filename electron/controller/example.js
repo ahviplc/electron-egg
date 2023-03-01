@@ -76,8 +76,9 @@ class ExampleController extends Controller {
     // 启动或停止闪烁窗口, 以吸引用户的注意
     this_BrowserWindow.flashFrame(true)
 
+    // 设置可以手动调整窗口大小
     // 设置用户是否可以手动调整窗口大小
-    this_BrowserWindow.setResizable(false)
+    // this_BrowserWindow.setResizable(false)
 
     // 设置用户是否可以移动窗口。 在Linux上不起作用
     this_BrowserWindow.setMovable(true)

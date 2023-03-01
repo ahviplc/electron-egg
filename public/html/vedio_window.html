@@ -9,7 +9,7 @@
     <title>ICamera直播摄像头</title>
 </head>
 <body>
-<video id="video" autoplay="autoplay"></video>
+<video id="video" autoplay="autoplay" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
 </body>
 <script>
     const {ipcRenderer} = require('electron');
@@ -83,12 +83,12 @@
 
     // 监听鼠标进入
     video.addEventListener('mouseenter', () => {
-        alert(11111)
+        console.log(' === public/html/vedio_window.html', ' mouseenter ===')
     })
 
     // 监听鼠标出去
     video.addEventListener('mouseleave', () => {
-        alert(22222)
+        console.log('=== public/html/vedio_window.html', ' mouseleave ===')
     })
 
     // 双击停止视频并且关闭摄像头
