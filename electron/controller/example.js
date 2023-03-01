@@ -16,6 +16,12 @@ let myTimer = null;
 let browserViewObj = null;
 let notificationObj = null;
 
+// 这是主进程的app
+// 此写法可以触发
+// electronApp.on('ready', () => {
+//   console.log("===== electron/controller/example.js electronApp ready =====")
+// })
+
 /**
  * 示例控制器
  * @class
@@ -71,7 +77,7 @@ class ExampleController extends Controller {
     this_BrowserWindow.flashFrame(true)
 
     // 设置用户是否可以手动调整窗口大小
-    this_BrowserWindow.setResizable(true)
+    this_BrowserWindow.setResizable(false)
 
     // 设置用户是否可以移动窗口。 在Linux上不起作用
     this_BrowserWindow.setMovable(true)
