@@ -88,6 +88,9 @@ class ExampleController extends Controller {
     // 设置窗口是否应始终显示在其他窗口的前面
     this_BrowserWindow.setAlwaysOnTop(true)
 
+    // 让窗口不在任务栏中显示
+    this_BrowserWindow.setSkipTaskbar(false)
+
     // 取消工具栏
     // 设置窗口菜单栏是否自动隐藏。 一旦设置，菜单栏将只在用户单击 Alt 键时显示。
     this_BrowserWindow.setAutoHideMenuBar(true)
@@ -99,13 +102,16 @@ class ExampleController extends Controller {
     // 设置 transparent 和 frame 此页面的方法【createWindow (args)】也进行了相关的代码处理
     // 无边框窗口 【https://www.electronjs.org/zh/docs/latest/api/frameless-window】
     // 【frontend/src/views/base/window/Index.vue:61】
-    // 此窗口忽略所有鼠标事件 设置为 false 点击将无法穿透窗口
+    // 此窗口忽略所有鼠标事件 设置为 false 点击将无法穿透窗口 设置为 true 点击可穿透窗口
     this_BrowserWindow.setIgnoreMouseEvents(false)
 
     // 事件监听 生效的
     this_BrowserWindow.on('minimize', () => {
       console.log('===== electron/controller/example.js', ' modifyBrowserWindowStyle()', ' 窗口最小化时触发 =====')
     })
+
+    // debug
+    // this_BrowserWindow.webContents.toggleDevTools()
 
     // 最后将其show出来 不写也会生效前面的配置
     // this_BrowserWindow.show()

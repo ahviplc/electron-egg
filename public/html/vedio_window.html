@@ -81,6 +81,16 @@
 
     };
 
+    // 监听鼠标进入
+    video.addEventListener('mouseenter', () => {
+        alert(11111)
+    })
+
+    // 监听鼠标出去
+    video.addEventListener('mouseleave', () => {
+        alert(22222)
+    })
+
     // 双击停止视频并且关闭摄像头
     video.ondblclick = () => {
         // 发送关闭摄像头通知-让主线程发送系统通知

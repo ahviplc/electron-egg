@@ -57,7 +57,7 @@ export default {
           content: '/public/html/vedio_window.html',
           height: 200, // 自己可以在此扩展属性 对应修改【electron/controller/example.js.createWindow (args)】中的opt参数代码
           width: 200,
-          frame: true, // 可以去掉 顶部导航 去掉关闭|最大化|最小化|按钮 默认值是 true
+          frame: true, // 为 false 可以去掉 顶部导航 去掉关闭|最大化|最小化|按钮 默认值是 true
           transparent: false // 将 transparent 选项设置为 true, 可以使无框窗口透明 默认值为 false
         },
       ],
