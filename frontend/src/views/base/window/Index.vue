@@ -54,7 +54,7 @@ export default {
         },
         {
           type: 'html',
-          windowName:'win-camera',
+          windowName:'win-camera', // 想要只能打开一个窗口的页面 需要自己定义一个窗口名称 不可以叫【window-1】 其他名称均可以
           content: '/public/html/camera/vedio_window.html',
           height: 200, // 自己可以在此扩展属性 对应修改【electron/controller/example.js.createWindow (args)】中的opt参数代码
           width: 200,
