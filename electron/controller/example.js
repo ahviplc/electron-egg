@@ -42,6 +42,30 @@ class ExampleController extends Controller {
   // LC Diy Code
 
   /**
+   * 接收渲染进程的通信 改变窗口的位置 实现拖拽效果 这是兼容win和mac双平台的办法
+   * 参数说明
+   * { name: 'win-camera',this_x:  this_x,this_y:  this_y}
+   * name 窗口名称
+   * this_x 偏移量x
+   * this_y 偏移量y
+   *
+   * @param args
+   * @param event
+   */
+  makeItDraggable(args, event) {
+    // 通过窗口名称获取此窗口的 BrowserWindow
+    let this_BrowserWindow = this._getBrowserWindow(args.name);
+    // 获取原窗口的位置 x y
+    let firstPositionElement = this_BrowserWindow.getPosition()[0];
+    let secondPositionElement = this_BrowserWindow.getPosition()[1];
+    var now_x = firstPositionElement + args.this_x;
+    var now_y = secondPositionElement + args.this_y;
+    // 重新设置窗口的位置
+    this_BrowserWindow.setPosition(now_x, now_y)
+    console.log('===== electron/controller/example.js|ExampleController.makeItDraggable ', '原位置=> ', firstPositionElement, secondPositionElement, ' 偏移量=> ', args.this_x, args.this_y, ' 现在位置=> ', now_x, now_y,)
+  }
+
+  /**
    * 更改 BrowserWindow 的相关样式
    * https://www.electronjs.org/zh/docs/latest/api/browser-window
    * https://www.bootwiki.com/electron/electron-browser-window.html
