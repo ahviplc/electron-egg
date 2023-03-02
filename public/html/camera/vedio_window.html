@@ -29,7 +29,8 @@
         border-radius: 50%;
         /* 镜像反转 */
         transform: rotateY(180deg);
-        /* 可拖拽 这个拖拽在mac下运行良好 但是在win下 此页面的鼠标事件会全部丢失*/
-        -webkit-app-region: drag;
+        /* 可拖拽 这个拖拽 如果配置【frame: false】【transparent: true】无边框透明窗口 在mac下运行良好 但是在win下 此页面的鼠标事件会全部丢失 */
+        /* 使用更好的解决办法 兼容mac和win操作系统 */
+        /*-webkit-app-region: drag;*/
     }
 </style>

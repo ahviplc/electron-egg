@@ -67,7 +67,8 @@ class ExampleController extends Controller {
     // this_BrowserWindow.maximize()
 
     // 设置窗口的背景颜色
-    this_BrowserWindow.setBackgroundColor('rgba(33,125,226,0.72)')
+    // 透明的背景颜色【#00000000】
+    this_BrowserWindow.setBackgroundColor('#00000000')
     // console.log(this_BrowserWindow.getBackgroundColor());
 
     // 调整窗口的width和 height
@@ -442,6 +443,17 @@ class ExampleController extends Controller {
       transparent: args.transparent,
     }
     const name = args.windowName || 'window-1';
+
+    // 加个判断
+    // 如果窗口的name不等于 window-1【因为这个是默认的 就无所谓 放过吧 所有的打开页面 没有配置 windowName属性的 都是叫做 window-1】
+    // 并且 如果name值在addonWindow.map中已经包含 就return掉 不创建新窗口
+    if (!(name === 'window-1')) {
+      // hasOwnProperty() 返回一个布尔值，用于表示一个对象自身是否包含指定的属性
+      if (addonWindow.windowContentsIdMap.hasOwnProperty(name)) {
+        return `${name}` + ' 窗口已经创建 只可以创建一个 不可以重复创建'
+      }
+    }
+
     const win = addonWindow.create(name, opt);
     const winContentsId = win.webContents.id;
 

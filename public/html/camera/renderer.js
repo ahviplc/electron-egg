@@ -9,7 +9,7 @@ var videoStream = null;
 var stop = true;
 // 页面加载完成自动执行
 window.onload = () => {
-    // 获取摄像头视频
+    // 获取摄像头视频流
     getMedia();
 
     // 一些知识点
@@ -58,7 +58,7 @@ window.onload = () => {
         console.log("再次初始化样式", "modifyBrowserWindowStyle");
         // 改变此弹出窗口的样式 高 宽 是否透明等
         ipcRenderer.invoke('controller.example.modifyBrowserWindowStyle', {
-            name: 'window-1', // 这个是【electron/controller/example.js.createWindow (args)】写死的name
+            name: 'win-camera', //【win-camera】可在【frontend/src/views/base/window/Index.vue:57】进行配置 默认如果不配置就是【window-1】是【electron/controller/example.js.createWindow (args)】写死的name
             height: 700,
             width: 700
         }).then(res => {
@@ -69,6 +69,11 @@ window.onload = () => {
     // clearTimeout(timer);
 
 };
+
+// 目前此页面感觉不需要 因为摄像头前端的页面样式 就是已经是最小范围了 直接设置为 false 使其无法穿透窗口就行了
+// 点击穿透窗口 转发
+// setIgnoreMouseEvents(true/false) 设置为 false 点击将无法穿透窗口 设置为 true 点击可穿透窗口
+// 对应官方文档【https://www.electronjs.org/zh/docs/latest/api/frameless-window#转发】
 
 // 监听鼠标进入
 video.addEventListener('mouseenter', () => {
@@ -95,11 +100,12 @@ async function close_win() {
     ipcRenderer.invoke('controller.example.getWCid', 'main').then(id => {
         const this_mainWCid = id;
         console.log('主窗口的id', this_mainWCid)
+        // 此窗口和主窗口通信 可用
         // ipcRenderer.sendTo(this_mainWCid, 'window2-to-window1', '窗口2 通过 sendTo 给主窗口发送消息');
     });
 
     // 调用官方api 关闭窗口
-    const is_ok = await ipcRenderer.invoke('controller.example.removeWCid', 'window-1');
+    const is_ok = await ipcRenderer.invoke('controller.example.removeWCid', 'win-camera');
     // 此处可以正常获取 只不过当时此窗口已被关闭 无任何效果罢了
     // console.log(is_ok)
     // if(is_ok){
