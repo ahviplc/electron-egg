@@ -54,7 +54,7 @@ export default {
         },
         {
           type: 'html',
-          content: '/public/html/vedio_window.html',
+          content: '/public/html/camera/vedio_window.html',
           height: 200, // 自己可以在此扩展属性 对应修改【electron/controller/example.js.createWindow (args)】中的opt参数代码
           width: 200,
           frame: true, // 为 false 可以去掉 顶部导航 去掉关闭|最大化|最小化|按钮 默认值是 true
