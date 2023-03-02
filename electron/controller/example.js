@@ -58,11 +58,14 @@ class ExampleController extends Controller {
     // 获取原窗口的位置 x y
     let firstPositionElement = this_BrowserWindow.getPosition()[0];
     let secondPositionElement = this_BrowserWindow.getPosition()[1];
+    // 通过偏移量计算得出拖动之后的现在位置
     var now_x = firstPositionElement + args.this_x;
     var now_y = secondPositionElement + args.this_y;
     // 重新设置窗口的位置
     this_BrowserWindow.setPosition(now_x, now_y)
     console.log('===== electron/controller/example.js|ExampleController.makeItDraggable ', '原位置=> ', firstPositionElement, secondPositionElement, ' 偏移量=> ', args.this_x, args.this_y, ' 现在位置=> ', now_x, now_y,)
+    // 执行成功 返回true
+    return true
   }
 
   /**

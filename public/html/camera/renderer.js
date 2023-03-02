@@ -4,11 +4,16 @@
 const {ipcRenderer} = require('electron');
 const path = require('path');
 // 获得video摄像头区域
+// 这样写也可以 【var video = document.querySelector('video')】
 var video = document.getElementById("video");
 var videoStream = null;
 // 因为摄像头视频流是自动播放的 所以将stop标签默认为false 使其第一次右键点击 其行为是暂停行为
 var stop = false;
 // 页面加载完成自动执行
+
+// 导出渲染进程公共工具方法
+const {sayHi, drag_plus} = require('../utils/RendererUtils')
+
 window.onload = () => {
     // 获取摄像头视频流
     getMedia();
@@ -79,6 +84,8 @@ window.onload = () => {
 // 监听鼠标进入
 video.addEventListener('mouseenter', () => {
     console.log(' === public/html/vedio_window.html', ' mouseenter ===')
+    // 调用测试方法
+    sayHi()
 })
 
 // 监听鼠标出去
@@ -86,38 +93,9 @@ video.addEventListener('mouseleave', () => {
     console.log('=== public/html/vedio_window.html', ' mouseleave ===')
 })
 
-// Electron 无边框窗口的拖动
-// 借鉴的解决代码【https://www.jianshu.com/p/96327b044e85】
-// 通过响应页面的 mousemove 事件
-let dragging = false;
-let mouseX = 0;
-let mouseY = 0;
-let this_x = 0; // 偏移量x
-let this_y = 0; // 偏移量y
-video.addEventListener('mousedown', (e) => {
-    dragging = true;
-    const { pageX, pageY } = e;
-    mouseX = pageX;
-    mouseY = pageY;
-});
-window.addEventListener('mouseup', () => {
-    dragging = false;
-});
-window.addEventListener('mousemove', (e) => {
-    if (dragging) {
-        const { pageX, pageY } = e;
-        this_x = pageX - mouseX;
-        this_y = pageY - mouseY;
-        // 改变此弹出窗口的样式 高 宽 是否透明等
-        ipcRenderer.invoke('controller.example.makeItDraggable', {
-            name: 'win-camera', //【win-camera】可在【frontend/src/views/base/window/Index.vue:57】进行配置 默认如果不配置就是【window-1】是【electron/controller/example.js.createWindow (args)】写死的name
-            this_x:  this_x,
-            this_y:  this_y
-        }).then(res => {
-            console.log('res:', res)
-        })
-    }
-});
+// 渲染进程公共工具
+// 拖拽方法启用
+drag_plus(video, "win-camera")
 
 // 双击停止视频并且关闭摄像头
 video.ondblclick = () => {
@@ -198,6 +176,6 @@ function getMedia() {
             console.log('Error => ', PermissionDeniedError.name, PermissionDeniedError.message, " 未发现设备");
             var return_msg = 'Error => ' + PermissionDeniedError.name + PermissionDeniedError.message + " 未发现设备";
             // alert(return_msg)
-            ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title:'通知',body:return_msg})
+            ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title: '通知', body: return_msg})
         });
 }
