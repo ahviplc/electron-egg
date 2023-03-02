@@ -6,7 +6,8 @@ const path = require('path');
 // 获得video摄像头区域
 var video = document.getElementById("video");
 var videoStream = null;
-var stop = true;
+// 因为摄像头视频流是自动播放的 所以将stop标签默认为false 使其第一次右键点击 其行为是暂停行为
+var stop = false;
 // 页面加载完成自动执行
 window.onload = () => {
     // 获取摄像头视频流
@@ -59,8 +60,8 @@ window.onload = () => {
         // 改变此弹出窗口的样式 高 宽 是否透明等
         ipcRenderer.invoke('controller.example.modifyBrowserWindowStyle', {
             name: 'win-camera', //【win-camera】可在【frontend/src/views/base/window/Index.vue:57】进行配置 默认如果不配置就是【window-1】是【electron/controller/example.js.createWindow (args)】写死的name
-            height: 700,
-            width: 700
+            height: 250,
+            width: 250
         }).then(res => {
             console.log('res:', res)
         })

@@ -57,6 +57,11 @@ class ExampleController extends Controller {
    * alwaysOnTop boolean (可选) - 窗口是否永远在别的窗口的上面。 默认值为 false.
    * show boolean (可选) - 窗口是否在创建时显示。 默认值为 true。
    *
+   * 传入参数说明 {name: 'win-camera', height: 250, width: 250}
+   * name 窗口名称
+   * height 高
+   * width 宽
+   *
    * @param args
    */
   modifyBrowserWindowStyle(args, event) {
@@ -71,8 +76,9 @@ class ExampleController extends Controller {
     this_BrowserWindow.setBackgroundColor('#00000000')
     // console.log(this_BrowserWindow.getBackgroundColor());
 
-    // 调整窗口的width和 height
-    this_BrowserWindow.setSize(250,250)
+    // 调整窗口的 width 和 height
+    // 从前端传过来获取
+    this_BrowserWindow.setSize(args.width, args.height)
 
     // 启动或停止闪烁窗口, 以吸引用户的注意
     this_BrowserWindow.flashFrame(true)
