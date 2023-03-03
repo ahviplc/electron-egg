@@ -61,15 +61,17 @@ let sayHiFuc = function () {
  */
 async function dealFuncP(el) {
     const this_imageData = getImgFromVedio(el);
-    const is_ok = await ipcRenderer.invoke('controller.example.savePicture', {name:'win-camera',imageData:this_imageData});
+    const is_ok = await ipcRenderer.invoke('controller.example.savePicture', {name: 'win-camera', imageData:this_imageData});
 }
 
 /**
  * 处理鼠标事件 Q 按键
  * 按q键 退出窗口
+ *
+ * @param this_win_name 窗口名称
  */
-async function dealFuncQ() {
-    const is_ok = await ipcRenderer.invoke('controller.example.removeWCid', 'win-camera');
+async function dealFuncQ(this_win_name) {
+    const is_ok = await ipcRenderer.invoke('controller.example.removeWCid', this_win_name);
 }
 
 /**
@@ -90,8 +92,25 @@ function getImgFromVedio(el) {
     return imageData
 }
 
+/**
+ * 处理键盘事件 c 按键
+ * 按c键 是保存录制的录像 目前此方法只是系统窗口提示
+ *
+ * @param el 未使用 | 拖拽的element对象 这两种写法均可获得【var video1 = document.getElementById("填入元素的id")】【var video2 = document.querySelector('video')】
+ * @param recorder 录制器
+ */
+function dealFuncC(el, recorder) {
+    if (recorder == null) {
+        ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title: '警告', body: '你没有可以打开的摄像头 拒绝保存录像' })
+        return
+    }
+    // 停止录制并保存录像
+    ipcRenderer.send('controller.example.showNotificationOnlyTitleANDBody', {title: '消息', body: '停止录制并保存录像'})
+}
+
 // 导出
 exports.drag_plus = drag_plus
 exports.sayHi = sayHiFuc
 exports.dealFuncP = dealFuncP
 exports.dealFuncQ = dealFuncQ
+exports.dealFuncC = dealFuncC

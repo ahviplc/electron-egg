@@ -42,6 +42,66 @@ class ExampleController extends Controller {
   // LC Diy Code
 
   /**
+   * 保存我的录像 执行保存录像操作
+   * 参数说明
+   * {name:'win-camera',this_buffer:blob}
+   * name 窗口名称
+   * this_buffer 录像的blob
+   *
+   * @param args
+   * @param event
+   */
+  saveMovie(args, event) {
+    // console.log(args);
+    let dataBuffer = event.this_buffer
+    {
+      // 保存视频文件
+      // 此 dia 返回 String | undefined, 用户选择的文件路径，如果对话框被取消了 ，则返回undefined
+      // 下面是使用的Sync同步操作 存在异步版本【dialog.showSaveDialog([browserWindow, ]options)】在macOS上，建议使用异步版本，以避免展开和折叠对话框时出现问题
+      let dia = dialog.showSaveDialogSync({
+        buttonLabel: "保存我的录像",
+        filters: [{ name: "Custom File Type", extensions: ["mp4"] }],
+      });
+      if (!dia) {
+        //点击取消时
+        // new Notification({
+        //   title: "ICamera",
+        //   body: "取消保存",
+        // }).show();
+
+        // 弹框
+        // 参数示例 {title: '通知', body: '取消保存'}
+        this.showNotificationOnlyTitleANDBody({title: 'ICamera录像', body: '取消保存'})
+      } else {
+        // 将此 this 赋值到 that
+        const that = this
+        // 确认保存
+        fs.writeFile(dia, dataBuffer, function (err) {
+          if (err) {
+            // new Notification({
+            //   title: "ICamera",
+            //   body: "保存失败",
+            // }).show();
+
+            // 弹框
+            // 参数示例 {title: '通知', body: '保存失败'}
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera录像', body: '保存失败'})
+          } else {
+            // new Notification({
+            //   title: "ICamera",
+            //   body: "保存成功",
+            // }).show();
+
+            // 弹框
+            // 参数示例 {title: '通知', body: '保存成功'}
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera录像', body: '保存成功'})
+          }
+        });
+      }
+    }
+  }
+
+  /**
    * 保存图片 执行保存图片操作
    * 参数说明
    * {name:'win-camera',imageData:this_imageData}
@@ -115,6 +175,10 @@ class ExampleController extends Controller {
   makeItDraggable(args, event) {
     // 通过窗口名称获取此窗口的 BrowserWindow
     let this_BrowserWindow = this._getBrowserWindow(args.name);
+    // 为 null 直接返回 false
+    if(this_BrowserWindow == null){
+      return false
+    }
     // 获取原窗口的位置 x y
     let firstPositionElement = this_BrowserWindow.getPosition()[0];
     let secondPositionElement = this_BrowserWindow.getPosition()[1];
@@ -153,6 +217,10 @@ class ExampleController extends Controller {
    */
   modifyBrowserWindowStyle(args, event) {
     let this_BrowserWindow = this._getBrowserWindow(args.name);
+    // 为 null 直接返回 false
+    if(this_BrowserWindow == null){
+      return false
+    }
     // console.log(this_BrowserWindow);
 
     // 最大化窗口。 如果窗口尚未显示，该方法也会将其显示 (但不会聚焦)。
@@ -231,6 +299,11 @@ class ExampleController extends Controller {
     const name = this_name;
     // 先获取id
     const id = addonWindow.getWCid(name);
+
+    // 判断是否为null 如果是返回null
+    if (id == null) {
+      return null
+    }
 
     // console.log(id,name)
 
