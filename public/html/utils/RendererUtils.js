@@ -58,10 +58,11 @@ let sayHiFuc = function () {
  * 按p键 是拍照 并且提示保存照片
  *
  * @param el 拖拽的element对象 这两种写法均可获得【var video1 = document.getElementById("填入元素的id")】【var video2 = document.querySelector('video')】
+ * @param this_win_name 窗口名称
  */
-async function dealFuncP(el) {
+async function dealFuncP(el, this_win_name) {
     const this_imageData = getImgFromVedio(el);
-    const is_ok = await ipcRenderer.invoke('controller.example.savePicture', {name: 'win-camera', imageData:this_imageData});
+    const is_ok = await ipcRenderer.invoke('controller.example.savePicture', {name: this_win_name, imageData:this_imageData});
 }
 
 /**

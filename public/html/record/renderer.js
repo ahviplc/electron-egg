@@ -13,7 +13,7 @@ var stop = false;
 var recorder = null;
 
 // 导出渲染进程公共工具方法
-const {drag_plus, dealFuncC, dealFuncQ} = require('../utils/RendererUtils')
+const {drag_plus, dealFuncC, dealFuncQ, dealFuncP} = require('../utils/RendererUtils')
 
 // 页面加载完成自动执行
 window.onload = () => {
@@ -104,11 +104,13 @@ drag_plus(video, "win-record")
 // keyup：当任意按键被松开时触发
 // ==================================================================================
 // 按c键 是录制-录制摄像头 并且提示保存录像
+// 按p键 是拍照 并且提示保存照片
+// 按q键 退出窗口
 window.addEventListener("keydown", function (event) {
     console.log('keydown => ', event.key, event.code); // keydown => p KeyP 注意按键区分大小写 Q KeyQ
     switch (event.key.toLowerCase()) { // 这里做不区分p大小写处理
         case 'c':
-            // 处理
+            // 处理录像
             dealFuncC(video,recorder)
             // 暂停视频
             fakeStopMedia()
@@ -120,6 +122,10 @@ window.addEventListener("keydown", function (event) {
             stop_two()
             // 退出窗口
             dealFuncQ('win-record')
+            break;
+        case 'p':
+            // 拍照
+            dealFuncP(video, 'win-record')
             break;
         default:
             console.log('keydown switch default')

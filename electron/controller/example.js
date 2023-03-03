@@ -131,7 +131,7 @@ class ExampleController extends Controller {
 
         // 弹框
         // 参数示例 {title: '通知', body: '取消保存'}
-        this.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '取消保存'})
+        this.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '取消保存照片'})
       } else {
         // 将此 this 赋值到 that
         const that = this
@@ -145,7 +145,7 @@ class ExampleController extends Controller {
 
             // 弹框
             // 参数示例 {title: '通知', body: '保存失败'}
-            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存失败'})
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存照片失败'})
           } else {
             // new Notification({
             //   title: "ICamera",
@@ -154,7 +154,7 @@ class ExampleController extends Controller {
 
             // 弹框
             // 参数示例 {title: '通知', body: '保存成功'}
-            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存成功'})
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存照片成功'})
           }
         });
       }

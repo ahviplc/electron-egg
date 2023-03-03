@@ -111,7 +111,7 @@ https://www.yuque.com/u34495/mivcfg
 -【node_modules/ee-core/addon/window/index.js】
 - 保存文件操作代码块【https://gitee.com/xt-gitee/icamera/blob/master/main.js】
 - 直播摄像头页面按p键可以保存捕获当前页面的照片 按q键退出窗口
-- 录制摄像头页面按c键可以保存当前的录像 按q键退出窗口
+- 录制摄像头页面按c键可以保存当前的录像 按p键可以保存捕获当前页面的照片 按q键退出窗口
 ```
 
 ## 📋 介绍

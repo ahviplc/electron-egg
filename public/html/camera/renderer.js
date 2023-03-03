@@ -110,7 +110,7 @@ window.addEventListener("keydown", function (event) {
     console.log('keydown => ', event.key, event.code); // keydown => p KeyP 注意按键区分大小写 Q KeyQ
     switch (event.key.toLowerCase()) { // 这里做不区分p大小写处理
         case 'p':
-            dealFuncP(video)
+            dealFuncP(video, 'win-camera')
             break;
         case 'q':
             dealFuncQ('win-camera')
