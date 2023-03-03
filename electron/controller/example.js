@@ -56,6 +56,8 @@ class ExampleController extends Controller {
     {
       let base64 = args.imageData.replace(/^data:image\/\w+;base64,/, "");
       let dataBuffer = Buffer.from(base64, "base64");
+      // 此 dia 返回 String | undefined, 用户选择的文件路径，如果对话框被取消了 ，则返回undefined
+      // 下面是使用的Sync同步操作 存在异步版本【dialog.showSaveDialog([browserWindow, ]options)】在macOS上，建议使用异步版本，以避免展开和折叠对话框时出现问题
       let dia = dialog.showSaveDialogSync({
         buttonLabel: "保存我的照片",
         filters: [{ name: "Custom File Type", extensions: ["png", "jpg"] }],
