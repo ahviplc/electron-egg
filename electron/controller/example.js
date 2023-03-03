@@ -510,7 +510,7 @@ class ExampleController extends Controller {
   }
 
   /**
-   * 移除窗口 通过窗口名称
+   * 移除窗口 通过窗口名称查询窗口Contents id 再再从而查询到此 BrowserWindow 并关闭掉
    */
   removeWCid (args) {
     // 使用日志记录功能 logger
@@ -525,20 +525,25 @@ class ExampleController extends Controller {
     const name = args;
     // 先获取id
     const id = addonWindow.getWCid(name);
-    // 先在map中移除
-    addonWindow.removeWCid(name);
+    if (id == null) {
+      this.app.logger.info('===== electron/controller/example.js|ExampleController.removeWCid| ', name, ' => 通过此name在addonWindow插件的windowContentsIdMap未查询到窗口Contents id')
+      return false
+    } else {
+      // 先在map中移除
+      addonWindow.removeWCid(name);
 
-    // console.log(id,name)
+      // console.log(id,name)
 
-    // 实际移除
-    // 通过窗口的id 返回 BrowserWindow | null - 带有给定 id 的窗口。
-    const thisBrowserWindow  = BrowserWindow.fromId(id);
-    if(thisBrowserWindow){
+      // 实际移除
+      // 通过窗口的id 返回 BrowserWindow | null - 带有给定 id 的窗口。
+      const thisBrowserWindow = BrowserWindow.fromId(id);
+      if (thisBrowserWindow) {
 
-      // 执行官方api 关闭窗口
-      // 尝试关闭窗口。 该方法与用户手动单击窗口的关闭按钮效果相同。 但网页可能会取消这个关闭操作。 查看 关闭事件。
-      // https://www.electronjs.org/zh/docs/latest/api/browser-window#winclose
-      thisBrowserWindow.close()
+        // 执行官方api 关闭窗口
+        // 尝试关闭窗口。 该方法与用户手动单击窗口的关闭按钮效果相同。 但网页可能会取消这个关闭操作。 查看 关闭事件。
+        // https://www.electronjs.org/zh/docs/latest/api/browser-window#winclose
+        thisBrowserWindow.close()
+      }
     }
 
     return true;
