@@ -90,6 +90,12 @@ npm run encrypt
 * 一些链接
 ICamera: 纯净且实用的电脑摄像头小工具
 https://gitee.com/xt-gitee/icamera
+摄像头
+https://gitee.com/xt-gitee/icamera/blob/master/html/vedio_window.html
+拍照借鉴代码
+https://gitee.com/xt-gitee/icamera/blob/master/html/photo_window.html
+一些具体electron层级代码
+https://gitee.com/xt-gitee/icamera/blob/master/main.js
 
 app | Electron
 https://www.electronjs.org/zh/docs/latest/api/app
@@ -104,6 +110,7 @@ https://www.yuque.com/u34495/mivcfg
 - 这样可以直接调用控制器中的方法【this.app.controller.example.showNotificationOnlyTitleANDBody({title: '通知', body: '退出直播'})】
 -【node_modules/ee-core/addon/window/index.js】
 - 保存文件操作代码块【https://gitee.com/xt-gitee/icamera/blob/master/main.js】
+- 摄像头页面按p键可以保存捕获当前页面的照片
 ```
 
 ## 📋 介绍

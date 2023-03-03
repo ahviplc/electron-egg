@@ -1,5 +1,6 @@
 // renderer.js 渲染进程
 // for vedio_window.html
+// this === window | 就是常规html下的窗口对象
 
 const {ipcRenderer} = require('electron');
 const path = require('path');
@@ -12,7 +13,7 @@ var stop = false;
 // 页面加载完成自动执行
 
 // 导出渲染进程公共工具方法
-const {sayHi, drag_plus} = require('../utils/RendererUtils')
+const {sayHi, drag_plus, dealFuncP, dealFuncQ} = require('../utils/RendererUtils')
 
 window.onload = () => {
     // 获取摄像头视频流
@@ -96,6 +97,33 @@ video.addEventListener('mouseleave', () => {
 // 渲染进程公共工具
 // 拖拽方法启用
 drag_plus(video, "win-camera")
+
+// 键盘事件
+// 相关介绍链接【https://juejin.cn/post/7029319401178398728】
+// keydown：当任意按键被按下时触发；
+// keypress: 它仅在产生字符值的键被按下时触发。举例来说，如果你按下键 a，此事件将会触发，因为 a 键产生了字符值 97 。当你按下 shift 键时不会触发此事件，因为它不会产生任何字符值；
+// keyup：当任意按键被松开时触发
+// ==================================================================================
+// 按p键 是拍照 并且提示保存照片
+// 按q键 退出窗口
+window.addEventListener("keydown", function (event) {
+    console.log('keydown => ', event.key, event.code); // keydown => p KeyP 注意按键区分大小写 Q KeyQ
+    switch (event.key.toLowerCase()) { // 这里做不区分p大小写处理
+        case 'p':
+            dealFuncP(video)
+            break;
+        case 'q':
+            dealFuncQ()
+            break;
+        default:
+            console.log('keydown switch default')
+    }
+});
+
+// 此隐掉不要
+// window.addEventListener("keypress", function (event) {
+//     console.log('keypress => ',event.key,event.code);
+// });
 
 // 双击停止视频并且关闭摄像头
 video.ondblclick = () => {

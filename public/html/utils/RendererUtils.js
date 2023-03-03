@@ -1,5 +1,7 @@
 // renderer 渲染进程共用的工具类 方法 代码块
 
+const {ipcRenderer} = require("electron");
+
 /**
  * 拖拽方法 适配双平台
  *
@@ -51,6 +53,45 @@ let sayHiFuc = function () {
     return 'sayHiO'
 };
 
+/**
+ * 处理键盘事件 P 按键
+ * 按p键 是拍照 并且提示保存照片
+ *
+ * @param el 拖拽的element对象 这两种写法均可获得【var video1 = document.getElementById("填入元素的id")】【var video2 = document.querySelector('video')】
+ */
+async function dealFuncP(el) {
+    const this_imageData = getImgFromVedio(el);
+    const is_ok = await ipcRenderer.invoke('controller.example.savePicture', {name:'win-camera',imageData:this_imageData});
+}
+
+/**
+ * 处理鼠标事件 Q 按键
+ * 按q键 退出窗口
+ */
+async function dealFuncQ() {
+    const is_ok = await ipcRenderer.invoke('controller.example.removeWCid', 'win-camera');
+}
+
+/**
+ * 拍照功能从视频流画出照片
+ *
+ * @param el 拖拽的element对象 这两种写法均可获得【var video1 = document.getElementById("填入元素的id")】【var video2 = document.querySelector('video')】
+ * @returns {string}
+ */
+function getImgFromVedio(el) {
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+    canvas.width = el.videoWidth;
+    canvas.height = el.videoHeight;
+    ctx.drawImage(el, 0, 0, canvas.width, canvas.height);
+    // 将图片数据保存
+    const imageData = canvas.toDataURL("image/png");
+    // console.log(canvas.toDataURL("image/png"));
+    return imageData
+}
+
 // 导出
 exports.drag_plus = drag_plus
 exports.sayHi = sayHiFuc
+exports.dealFuncP = dealFuncP
+exports.dealFuncQ = dealFuncQ

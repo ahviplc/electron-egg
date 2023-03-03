@@ -42,6 +42,64 @@ class ExampleController extends Controller {
   // LC Diy Code
 
   /**
+   * 保存图片 执行保存图片操作
+   * 参数说明
+   * {name:'win-camera',imageData:this_imageData}
+   * name 窗口名称
+   * imageData 图片数据
+   *
+   * @param args
+   * @param event
+   */
+  savePicture(args, event) {
+    // console.log(args);
+    {
+      let base64 = args.imageData.replace(/^data:image\/\w+;base64,/, "");
+      let dataBuffer = Buffer.from(base64, "base64");
+      let dia = dialog.showSaveDialogSync({
+        buttonLabel: "保存我的照片",
+        filters: [{ name: "Custom File Type", extensions: ["png", "jpg"] }],
+      });
+      if (!dia) {
+        //点击取消时
+        // new Notification({
+        //   title: "ICamera",
+        //   body: "取消保存",
+        // }).show();
+
+        // 弹框
+        // 参数示例 {title: '通知', body: '取消保存'}
+        this.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '取消保存'})
+      } else {
+        // 将此 this 赋值到 that
+        const that = this
+        // 确认保存
+        fs.writeFile(dia, dataBuffer, function (err) {
+          if (err) {
+            // new Notification({
+            //   title: "ICamera",
+            //   body: "保存失败",
+            // }).show();
+
+            // 弹框
+            // 参数示例 {title: '通知', body: '保存失败'}
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存失败'})
+          } else {
+            // new Notification({
+            //   title: "ICamera",
+            //   body: "保存成功",
+            // }).show();
+
+            // 弹框
+            // 参数示例 {title: '通知', body: '保存成功'}
+            that.showNotificationOnlyTitleANDBody({title: 'ICamera', body: '保存成功'})
+          }
+        });
+      }
+    }
+  }
+
+  /**
    * 接收渲染进程的通信 改变窗口的位置 实现拖拽效果 这是兼容win和mac双平台的办法
    * 参数说明
    * { name: 'win-camera',this_x:  this_x,this_y:  this_y}
